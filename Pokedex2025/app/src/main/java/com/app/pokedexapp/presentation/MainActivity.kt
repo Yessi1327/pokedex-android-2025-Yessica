@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokedexAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    // Aqui todo sucede dentro de la pantalla principal
                     PokemonNavGraph()
                 }
             }
