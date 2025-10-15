@@ -19,11 +19,12 @@ sealed class Screen(
     object Home : Screen("home")
 
     // Est define una ruta para la pantalla de detalles de un Pokémon remplazando el argumento con {pokemonId}
-    object Detail : Screen("pokemon/\{pokemonId\}") {
+    object Detail : Screen("pokemon/{pokemonId}") {
         fun createRoute(pokemonId: String) = "pokemon/$pokemonId"
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun PokemonNavGraph(
     modifier: Modifier = Modifier,
