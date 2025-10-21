@@ -1,8 +1,11 @@
 package com.app.pokedexapp.presentation.screens.detail
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,10 +19,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.app.pokedexapp.domain.model.Pokemon
+import com.app.pokedexapp.presentation.screens.detail.components.Chip
 
 // Indica que dentro de esta función se usarán APIs experimentales de Material3 (por ejemplo, TopAppBar).
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,6 +37,11 @@ fun PokemonDetailScreen(
     // Recibe una función que se ejecutará cuando el usuario presione el botón "Atrás".
     onBackClick: () -> Unit,
 ) {
+    val mockPokemon =
+        remember {
+            Pokemon.getMockData().find { it.id == pokemonId }
+        }
+
     // Scaffold crea la estructura base de esta pantalla: barra superior (topBar) + contenido.
     Scaffold(
         // Sección de la barra superior.
@@ -52,39 +63,61 @@ fun PokemonDetailScreen(
         // Este lambda recibe el "padding" interno que genera Scaffold.
     ) { padding ->
 
-        // Usa un Column para colocar los elementos uno debajo del otro.
-        Column(
-            // Modifier define las características visuales del Column.
-            modifier =
-                Modifier
-                    // Ocupa todo el alto y ancho disponible.
-                    .fillMaxSize()
-                    // Aplica el padding automático del Scaffold (para no quedar bajo la barra superior).
-                    .padding(padding)
-                    // Agrega un padding extra de 16 dp en todos los lados.
-                    .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            // Muestra una imagen desde Internet usando Coil.
-            // Mock data para el Lab 3
-            // En este caso, la URL se genera dinámicamente con el ID del Pokémon.
-            AsyncImage(
-                // URL de la imagen del Pokémon, tomada del repositorio de sprites de la PokeAPI.
-                model = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
-                contentDescription = "Pokemon $pokemonId",
-                // Tamaño de la imagen.
-                modifier = Modifier.size(200.dp),
-            )
+        // El let es una de las funciones de alcance que Kotlin proporciona
+        // para ejecutar un bloque de código dentro del contexto de un objeto.
+        mockPokemon?.let { pokemon ->
+            // Aquí 'pokemon' es una versión no-nullable de mockPokemon
+            // El código aquí solo se ejecuta si mockPokemon no es null
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                        .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                AsyncImage(
+                    model = pokemon.imageUrl,
+                    contentDescription = pokemon.name,
+                    modifier = Modifier.size(200.dp),
+                )
 
-            // Inserta un espacio vacío de 16 dp entre la imagen y el texto.
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Muestra el texto con el número del Pokémon actual.
-            Text(
-                text = "Pokemon #$pokemonId",
-                // Define el estilo tipográfico del texto
-                style = MaterialTheme.typography.headlineMedium,
-            )
+                Text(
+                    text = pokemon.name,
+                    style = MaterialTheme.typography.headlineMedium,
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Basic info
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Height")
+                        Text("${pokemon.height / 10.0}m")
+                    }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Weight")
+                        Text("${pokemon.weight / 10.0}kg")
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Types
+                Text("Types", style = MaterialTheme.typography.titleMedium)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    pokemon.types.forEach { type ->
+                        Chip(type = type)
+                    }
+                }
+            }
         }
     }
 }
