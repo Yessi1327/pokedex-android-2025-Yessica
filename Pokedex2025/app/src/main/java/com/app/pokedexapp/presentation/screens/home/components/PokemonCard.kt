@@ -15,12 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.app.pokedexapp.domain.model.Pokemon
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun PokemonCard(
-    name: String,
-    imageUrl: String,
+    // data desde el data class
+    pokemon: Pokemon,
     onClick: () -> Unit,
 ) {
     Card(
@@ -35,8 +36,8 @@ fun PokemonCard(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             AsyncImage(
-                model = imageUrl,
-                contentDescription = name,
+                model = pokemon.imageUrl,
+                contentDescription = pokemon.name,
                 modifier =
                     Modifier
                         .size(120.dp)
@@ -44,7 +45,7 @@ fun PokemonCard(
             )
 
             Text(
-                text = name,
+                text = pokemon.name,
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
             )
