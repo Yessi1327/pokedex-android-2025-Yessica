@@ -71,18 +71,11 @@ fun HomeScreen(onPokemonClick: (String) -> Unit) {
 
             // Dependiendo de la pestaña seleccionada, muestra una u otra pantalla.
             when (selectedTabIndex) {
-<<<<<<< HEAD
                 0 ->
                     PokemonListTab(
                         pokemonList = mockPokemonList,
                         onPokemonClick = onPokemonClick,
                     )
-=======
-                // Si el índice es 0 → muestra la lista de Pokémon.
-                0 -> PokemonListTab(onPokemonClick = onPokemonClick)
-
-                // Si el índice es 1 → muestra la pestaña de búsqueda.
->>>>>>> main
                 1 -> SearchTab(onPokemonClick = onPokemonClick)
             }
         }
