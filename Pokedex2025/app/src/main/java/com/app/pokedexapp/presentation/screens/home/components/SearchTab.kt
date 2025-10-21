@@ -14,23 +14,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
+// Crea una columna vertical para organizar los elementos (título y mensaje)
 @Suppress("ktlint:standard:function-naming")
+// Define el composable que representa la pestaña de "Búsqueda" de la app.
 @Composable
 fun SearchTab(onPokemonClick: (String) -> Unit) {
+    // Crea una columna vertical para organizar los elementos (título y mensaje).
     Column(
+        // Define las características visuales de la columna.
         modifier =
             Modifier
                 .fillMaxSize()
                 .padding(16.dp),
+        // Centra horizontalmente todo el contenido dentro de la columna.
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        // Muestra el título de la pestaña.
         Text(
-            text = "Búsqueda de Pokémon",
-            style = MaterialTheme.typography.headlineMedium,
+            text = "Búsqueda de Pokémon", // Texto que se muestra en la parte superior.
+            style = MaterialTheme.typography.headlineMedium, // Usa estilo de título grande del tema.
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Texto secundario que indica que esta función aún no está implementada.
         Text(
             text = "Funcionalidad disponible próximamente",
             style = MaterialTheme.typography.bodyMedium,
