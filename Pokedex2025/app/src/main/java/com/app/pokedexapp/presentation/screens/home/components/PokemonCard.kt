@@ -15,16 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.app.pokedexapp.domain.model.Pokemon
 
 @Suppress("ktlint:standard:function-naming")
 // Función composable que define cómo se ve una tarjeta de Pokémon en la lista.
 @Composable
 fun PokemonCard(
+<<<<<<< HEAD
+    // data desde el data class
+    pokemon: Pokemon,
+=======
     // Nombre del Pokémon que se mostrará debajo de la imagen.
     name: String,
     // URL de la imagen que se cargará desde Internet.
     imageUrl: String,
     // Acción a ejecutar cuando se hace clic sobre la tarjeta.
+>>>>>>> main
     onClick: () -> Unit,
 ) {
     // Crea una tarjeta (Card) de Material3.
@@ -46,8 +52,8 @@ fun PokemonCard(
         ) {
             // Carga y muestra la imagen del Pokémon desde Internet.
             AsyncImage(
-                model = imageUrl,
-                contentDescription = name,
+                model = pokemon.imageUrl,
+                contentDescription = pokemon.name,
                 modifier =
                     Modifier
                         .size(120.dp)
@@ -55,8 +61,12 @@ fun PokemonCard(
             )
 
             Text(
+<<<<<<< HEAD
+                text = pokemon.name,
+=======
                 text = name,
                 // Usa la tipografía definida en el tema global de la app
+>>>>>>> main
                 style = MaterialTheme.typography.titleMedium,
                 // Centra el texto horizontalmente.
                 textAlign = TextAlign.Center,

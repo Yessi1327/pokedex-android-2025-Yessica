@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.app.pokedexapp.domain.model.Pokemon
 import com.app.pokedexapp.presentation.screens.home.components.PokemonListTab
 import com.app.pokedexapp.presentation.screens.home.components.SearchTab
 
@@ -31,6 +32,7 @@ fun HomeScreen(onPokemonClick: (String) -> Unit) {
 
     // Lista de nombres de las pestañas. Se usan para generar dinámicamente los botones de Tab.
     val tabs = listOf("Pokémon List", "Search")
+    val mockPokemonList = remember { Pokemon.getMockData() }
 
     // Scaffold crea una estructura base con una barra superior y un área de contenido.
     Scaffold(
@@ -69,10 +71,18 @@ fun HomeScreen(onPokemonClick: (String) -> Unit) {
 
             // Dependiendo de la pestaña seleccionada, muestra una u otra pantalla.
             when (selectedTabIndex) {
+<<<<<<< HEAD
+                0 ->
+                    PokemonListTab(
+                        pokemonList = mockPokemonList,
+                        onPokemonClick = onPokemonClick,
+                    )
+=======
                 // Si el índice es 0 → muestra la lista de Pokémon.
                 0 -> PokemonListTab(onPokemonClick = onPokemonClick)
 
                 // Si el índice es 1 → muestra la pestaña de búsqueda.
+>>>>>>> main
                 1 -> SearchTab(onPokemonClick = onPokemonClick)
             }
         }
