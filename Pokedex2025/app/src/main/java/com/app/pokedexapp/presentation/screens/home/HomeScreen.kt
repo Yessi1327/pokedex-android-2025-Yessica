@@ -20,26 +20,45 @@ import com.app.pokedexapp.presentation.screens.home.components.SearchTab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Suppress("ktlint:standard:function-naming")
+// Composable principal de la pantalla Home.
+// Muestra la barra superior, las pestañas y el contenido de cada una.
 @Composable
 fun HomeScreen(onPokemonClick: (String) -> Unit) {
+    // Variable que guarda el índice de la pestaña actualmente seleccionada (0 o 1).
+    // "remember" hace que el valor se conserve mientras la composición esté activa.
+    // "mutableStateOf" crea un estado observable que redibuja la UI cuando cambia.
     var selectedTabIndex by remember { mutableStateOf(0) }
+
+    // Lista de nombres de las pestañas. Se usan para generar dinámicamente los botones de Tab.
     val tabs = listOf("Pokémon List", "Search")
 
+    // Scaffold crea una estructura base con una barra superior y un área de contenido.
     Scaffold(
+        // Barra superior centrada, usando el componente de Material3.
         topBar = {
             CenterAlignedTopAppBar(
+                // Título centrado en la barra superior.
                 title = { Text("Pokédex") },
             )
         },
+        // Este lambda recibe el padding automático del Scaffold.
     ) { padding ->
+
+        // Organiza los elementos verticalmente (barra de pestañas + contenido).
         Column(
             modifier =
                 Modifier
+                    // Ocupa todo el tamaño disponible de la pantalla.
                     .fillMaxSize()
+                    // Aplica el padding interno que genera Scaffold
                     .padding(padding),
         ) {
+            // TabRow dibuja las pestañas horizontales (como una barra superior con dos opciones).
             TabRow(selectedTabIndex = selectedTabIndex) {
+                // Genera dinámicamente las pestañas a partir de la lista "tabs".
                 tabs.forEachIndexed { index, title ->
+
+                    // Cada pestaña muestra su título y cambia de color cuando está seleccionada.
                     Tab(
                         text = { Text(title) },
                         selected = selectedTabIndex == index,
@@ -48,8 +67,12 @@ fun HomeScreen(onPokemonClick: (String) -> Unit) {
                 }
             }
 
+            // Dependiendo de la pestaña seleccionada, muestra una u otra pantalla.
             when (selectedTabIndex) {
+                // Si el índice es 0 → muestra la lista de Pokémon.
                 0 -> PokemonListTab(onPokemonClick = onPokemonClick)
+
+                // Si el índice es 1 → muestra la pestaña de búsqueda.
                 1 -> SearchTab(onPokemonClick = onPokemonClick)
             }
         }
