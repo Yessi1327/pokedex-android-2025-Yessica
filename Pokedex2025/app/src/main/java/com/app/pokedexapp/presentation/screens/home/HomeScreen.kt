@@ -1,3 +1,4 @@
+// Es el composable raíz de la pantalla principal (Home) de tu Pokédex.
 package com.app.pokedexapp.presentation.screens.home
 
 import androidx.compose.foundation.layout.Column
@@ -15,7 +16,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.pokedexapp.domain.model.Pokemon
+import com.app.pokedexapp.presentation.screens.home.components.PokemonListContent
 import com.app.pokedexapp.presentation.screens.home.components.PokemonListTab
 import com.app.pokedexapp.presentation.screens.home.components.SearchTab
 
@@ -24,7 +28,10 @@ import com.app.pokedexapp.presentation.screens.home.components.SearchTab
 // Composable principal de la pantalla Home.
 // Muestra la barra superior, las pestañas y el contenido de cada una.
 @Composable
-fun HomeScreen(onPokemonClick: (String) -> Unit) {
+fun HomeScreen(
+    onPokemonClick: (String) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
     // Variable que guarda el índice de la pestaña actualmente seleccionada (0 o 1).
     // "remember" hace que el valor se conserve mientras la composición esté activa.
     // "mutableStateOf" crea un estado observable que redibuja la UI cuando cambia.
@@ -32,7 +39,9 @@ fun HomeScreen(onPokemonClick: (String) -> Unit) {
 
     // Lista de nombres de las pestañas. Se usan para generar dinámicamente los botones de Tab.
     val tabs = listOf("Pokémon List", "Search")
-    val mockPokemonList = remember { Pokemon.getMockData() }
+    // val mockPokemonList = remember { Pokemon.getMockData() }
+    // Automáticamente inicia la recolección del StateFlow cuando el composable está activo
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     // Scaffold crea una estructura base con una barra superior y un área de contenido.
     Scaffold(
@@ -72,8 +81,14 @@ fun HomeScreen(onPokemonClick: (String) -> Unit) {
             // Dependiendo de la pestaña seleccionada, muestra una u otra pantalla.
             when (selectedTabIndex) {
                 0 ->
-                    PokemonListTab(
-                        pokemonList = mockPokemonList,
+                    PokemonListContent(
+                        // Lista de Pokémon obtenida del ViewModel.
+                        pokemonList = uiState.pokemonList,
+                        // Indica si está cargando.
+                        isLoading = uiState.isLoading,
+                        // Mensaje de error (si lo hay).
+                        error = uiState.error,
+                        // Callback de navegación.
                         onPokemonClick = onPokemonClick,
                     )
                 1 -> SearchTab(onPokemonClick = onPokemonClick)
