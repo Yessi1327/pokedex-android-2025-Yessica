@@ -14,8 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.app.pokedexapp.presentation.navigation.PokemonNavGraph
 import com.app.pokedexapp.presentation.theme.PokedexAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+// hilt necesita saber cuales son los puntos de inicio de nuestra aplicación
 // Clase principal que representa la pantalla base de la app.
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     // Se ejecuta cuando la Activity se crea
     override fun onCreate(savedInstanceState: Bundle?) {

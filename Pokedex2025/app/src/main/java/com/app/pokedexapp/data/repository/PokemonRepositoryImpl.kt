@@ -1,11 +1,12 @@
 package com.app.pokedexapp.data.repository
 
+// Tuve que cambiar todos las Jakarta tanto de inject como de Singleton
 import com.app.pokedexapp.data.mapper.toDomain
 import com.app.pokedexapp.data.remote.api.PokemonApi
 import com.app.pokedexapp.domain.model.Pokemon
 import com.app.pokedexapp.domain.repository.PokemonRepository
-import jakarta.inject.Inject
-import jakarta.inject.Singleton
+import javax.inject.Inject
+import javax.inject.Singleton
 
 // Implementamos la interfaz PokemonRepository
 

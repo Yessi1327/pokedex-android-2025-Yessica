@@ -1,11 +1,12 @@
 package com.app.pokedexapp.domain.usecase
 
+// Tuve que cambiar todos las Jakarta tanto de inject como de Singleton
 import com.app.pokedexapp.domain.common.Result
 import com.app.pokedexapp.domain.model.Pokemon
 import com.app.pokedexapp.domain.repository.PokemonRepository
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 // Inyección de Dependencias:
 // El UseCase no crea el repository, lo recibe ya creado
