@@ -30,7 +30,8 @@ class HomeViewModel
         }
 
         // Función privada que maneja la lógica de obtención de Pokémon.
-        private fun loadPokemonList() {
+        // La volvi publica
+        fun loadPokemonList() {
             // Lanza una corrutina
             viewModelScope.launch {
                 // Ejecuta el caso de uso y escucha su flujo de resultados

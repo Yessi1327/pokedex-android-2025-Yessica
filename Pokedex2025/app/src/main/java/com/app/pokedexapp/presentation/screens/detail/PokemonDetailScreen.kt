@@ -32,6 +32,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.app.pokedexapp.domain.model.Pokemon
+import com.app.pokedexapp.presentation.common.components.ErrorView
+import com.app.pokedexapp.presentation.common.components.LoadingShimmer
 import com.app.pokedexapp.presentation.screens.detail.components.Chip
 import com.app.pokedexapp.presentation.screens.detail.components.PokemonDetailContent
 
@@ -90,16 +92,20 @@ fun PokemonDetailScreen(
             when {
                 // Si está cargando, muestra el indicador circular en el centro.
                 uiState.isLoading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
+                    LoadingShimmer(
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(200.dp),
                     )
                 }
                 // Si hubo un error, muestra el mensaje en rojo.
                 uiState.error != null -> {
-                    Text(
-                        text = uiState.error ?: "Unknown error",
+                    // Usar Componente de Error
+                    ErrorView(
+                        message = uiState.error ?: "Unknown error",
+                        onRetry = { viewModel.getPokemon(pokemonId) },
                         modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colorScheme.error,
                     )
                 }
                 // Si ya se obtuvo el Pokémon, muestra el contenido detallado.
