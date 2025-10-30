@@ -90,6 +90,8 @@ fun HomeScreen(
                         error = uiState.error,
                         // Callback de navegación.
                         onPokemonClick = onPokemonClick,
+                        // Parámetro agregado
+                        onRetry = { viewModel.loadPokemonList() },
                     )
                 1 -> SearchTab(onPokemonClick = onPokemonClick)
             }
